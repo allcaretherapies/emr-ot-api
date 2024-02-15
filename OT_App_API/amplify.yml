@@ -1,0 +1,19 @@
+version: 1
+backend:
+  api:
+    - name: OTAppAPI
+      service: api
+      providerPlugin: awscloudformation
+      build:
+        commands:
+          - dotnet restore
+          - dotnet publish -c Release -o ./publish
+      hosting:
+        service: Lambda
+        provider: AWS
+        build:
+          command: ./publish/OT_App_API.dll
+      functions:
+        - name: OTAppFunction
+          runtime: dotnetCore3.1
+          handler: OT_App_API::OT_App_API.LambdaEntryPoint::FunctionHandler
