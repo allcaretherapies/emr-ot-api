@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OTNotes.DataAccess;
 
@@ -11,9 +12,11 @@ using OTNotes.DataAccess;
 namespace OTNotes.DataAccess.Migrations
 {
     [DbContext(typeof(OtnotesContext))]
-    partial class OtnotesContextModelSnapshot : ModelSnapshot
+    [Migration("20240219084455_orderupdate")]
+    partial class orderupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,16 +34,13 @@ namespace OTNotes.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CHGeneralId"));
 
                     b.Property<string>("AdaptiveEquipment")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AdaptiveEquipmentDeatil")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AdditionalLanguages")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AttendSchool")
                         .HasColumnType("nvarchar(max)");
@@ -83,22 +83,23 @@ namespace OTNotes.DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("EnvBarrier")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("EnvBarrierEquipment")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ExpectedOutcome")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("FallHistoryDate")
+                    b.Property<DateTime?>("FallHistory")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FamilyDefictDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HasFallHistory")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HasFamilyDefict")
                         .HasColumnType("nvarchar(max)");
@@ -116,24 +117,16 @@ namespace OTNotes.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HomBoundDetail")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InterventionDetail")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("IsEnvBarrier")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IsHomeBound")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IsIntervention")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IsReceivingOutsideAgencyService")
                         .HasColumnType("nvarchar(max)");
@@ -142,8 +135,7 @@ namespace OTNotes.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LivingSituation")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LivingSituationDescription")
                         .HasColumnType("nvarchar(max)");
@@ -155,8 +147,7 @@ namespace OTNotes.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PriorAdl")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReceivedPastSpeechTherapyReport")
                         .HasColumnType("nvarchar(max)");
@@ -165,8 +156,7 @@ namespace OTNotes.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReportedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SitupAge")
                         .HasColumnType("int");
@@ -257,13 +247,15 @@ namespace OTNotes.DataAccess.Migrations
                     b.Property<string>("DoesWearHearingAids")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FCMIds")
+                    b.Property<string>("FcmIds")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HadHeadInjury")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HasAllergy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HasRecentChangeInVoice")

@@ -15,26 +15,24 @@ namespace OT_App_API
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // Use authentication middleware
-           // app.UseAuthentication();
-
-            // Use authorization middleware
-           // app.UseAuthorization();
-
+           
             if (env.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
+                   // c.SwaggerEndpoint("/OTAPI/swagger/v1/swagger.json", "OT-Notes-API");
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "OT-Notes-API");
                 });
             }
-            // Other middleware configurations...
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ICHGeneralService, CHGeneralService>();
+            services.AddScoped<ICHMedicalService, CHMedicalService>();
+
+            services.AddScoped<CHMedicalDAL>();
             services.AddScoped<CHGeneralDAL>();
 
             services.AddMvc(options =>
@@ -79,15 +77,9 @@ namespace OT_App_API
         [Obsolete]
         public void ConfigureLogging(IHostingEnvironment env, ILoggingBuilder logging)
         {
-
-            
-
             logging.AddConsole(); // Log to the console
-
             // Configure file logging
             //logging.AddFile("path/to/logs/log-{Date}.txt"); // Specify the path to the log file
-
-           
         }
     }
 }

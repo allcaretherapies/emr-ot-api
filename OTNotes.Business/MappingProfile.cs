@@ -13,7 +13,8 @@ namespace OTNotes.Business
     {
         public MappingProfile()
         {
-            CreateMap<ChGeneral, ChGeneralDTO > ().ReverseMap(); 
+            CreateMap<ChGeneral, ChGeneralDTO > ().ReverseMap();
+            CreateMap<ChMedical, ChMedicalDTO>().ReverseMap();
         }
     }
 }

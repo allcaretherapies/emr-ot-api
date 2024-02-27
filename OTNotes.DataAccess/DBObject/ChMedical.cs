@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OTNotes.DataAccess.DBObject;
@@ -7,15 +8,20 @@ namespace OTNotes.DataAccess.DBObject;
 [Table("CHMedical")]
 public partial class ChMedical
 {
-    public int ChmedicalId { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int CHMedicalId { get; set; }
 
     public int VisitId { get; set; }
 
-    public string HadHeadInjury { get; set; } = null!;
+    [Column(Order = 2)]
+    public int ClientId { get; set; }
+
+    public string? HadHeadInjury { get; set; } = null!;
 
     public string? HeadInjuryDescription { get; set; }
 
-    public string HasAllergy { get; set; } = null!;
+    public string? HasAllergy { get; set; } = null!;
 
     public string? AllergyDescription { get; set; }
 
@@ -59,7 +65,7 @@ public partial class ChMedical
 
     public string? DoesWearHearingAids { get; set; }
 
-    public string? FcmIds { get; set; }
+    public string? FCMIds { get; set; }
 
     public DateTime? CreatedDate { get; set; }
 

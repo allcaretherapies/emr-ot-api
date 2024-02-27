@@ -51,7 +51,7 @@ namespace OTNotes.DataAccess.DAL
         }
         private void UpdateExistingChGeneral(ChGeneral existingData)
         {
-            var dataExist = _dbContext.CHGenerals.Find(existingData.ChgeneralId); 
+            var dataExist = _dbContext.CHGenerals.Find(existingData.CHGeneralId); 
             if (dataExist == null)
                 return;
 
@@ -63,13 +63,13 @@ namespace OTNotes.DataAccess.DAL
             dataExist.HomBoundDescription = existingData.HomBoundDescription;
             dataExist.PriorAdl = existingData.PriorAdl;
             dataExist.HasFallHistory = existingData.HasFallHistory;
-            dataExist.FallHistory = existingData.FallHistory;
+            dataExist.FallHistoryDate = existingData.FallHistoryDate;
             dataExist.IsIntervention = existingData.IsIntervention;
             dataExist.InterventionDetail = existingData.InterventionDetail;
             dataExist.ReportedBy = existingData.ReportedBy;
             dataExist.LivingSituation = existingData.LivingSituation;
             dataExist.LivingSituationDescription = existingData.LivingSituationDescription;
-            dataExist.EnvBarrier = existingData.EnvBarrier;
+            dataExist.IsEnvBarrier = existingData.IsEnvBarrier;
             dataExist.EnvBarrierEquipment = existingData.EnvBarrierEquipment;
             dataExist.AdaptiveEquipment = existingData.AdaptiveEquipment;
             dataExist.AdaptiveEquipmentDeatil = existingData.AdaptiveEquipmentDeatil;

@@ -9,7 +9,9 @@ namespace OTNotes.DataAccess.DBObject;
 [Table("CHGeneral")]
 public partial class ChGeneral
 {
-    public int ChgeneralId { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int CHGeneralId { get; set; }
 
     public int ClientId { get; set; }
 
@@ -18,37 +20,37 @@ public partial class ChGeneral
     public string? DominantLanguage { get; set; }
     [StringLength(50)]
     public string? DominantLanguageOther { get; set; }
-
+    [StringLength(250)]
     public string? AdditionalLanguages { get; set; } = null!;
-
+    [StringLength(5)]
     public string? IsHomeBound { get; set; }
-
+    [StringLength(1000)]
     public string? HomBoundDetail { get; set; }
 
     public string? HomBoundDescription { get; set; }
-
+    [StringLength(1000)]
     public string? PriorAdl { get; set; }
-
+    [StringLength(5)]
     public string? HasFallHistory { get; set; }
 
-    public DateTime? FallHistory { get; set; }
-
+    public DateTime? FallHistoryDate { get; set; }
+    [StringLength(5)]
     public string? IsIntervention { get; set; }
-
+    [StringLength(50)]
     public string? InterventionDetail { get; set; }
-
+    [StringLength(50)]
     public string? ReportedBy { get; set; }
-
+    [StringLength(1000)]
     public string? LivingSituation { get; set; }
 
     public string? LivingSituationDescription { get; set; }
-
-    public string? EnvBarrier { get; set; }
-
+    [StringLength(1000)]
+    public string? IsEnvBarrier { get; set; }
+    [StringLength(1000)]
     public string? EnvBarrierEquipment { get; set; }
-
+    [StringLength(5)]
     public string? AdaptiveEquipment { get; set; }
-
+    [StringLength(1000)]
     public string? AdaptiveEquipmentDeatil { get; set; }
 
     public string? CommunicatesThrough { get; set; } = null!;

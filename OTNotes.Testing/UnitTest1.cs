@@ -6,11 +6,12 @@ namespace OTNotes.Testing
         public void Setup()
         {
         }
-
         [Test]
         public void Test1()
         {
-            Assert.Pass();
+            Assert.IsFalse(true,"this is done first test");
         }
+         
+
     }
 }
