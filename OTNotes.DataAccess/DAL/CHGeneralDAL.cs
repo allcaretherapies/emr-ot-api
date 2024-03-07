@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OTNotes.DataAccess.DBObject;
+using System;
+using System.Threading.Tasks;
 
 namespace OTNotes.DataAccess.DAL
 {
@@ -12,35 +10,34 @@ namespace OTNotes.DataAccess.DAL
     {
         private readonly OtnotesContext _dbContext;
         private readonly ILogger<CHGeneralDAL> _logger;
+
         public CHGeneralDAL(OtnotesContext dbContext, ILogger<CHGeneralDAL> logger)
         {
             _dbContext = dbContext;
             _logger = logger;
         }
 
-        public ChGeneral GetCHAGeneralByVisitID(int visitId)
+        public async Task<ChGeneral> GetCHAGeneralByVisitIDAsync(int visitId)
         {
-            var data= _dbContext.CHGenerals.OrderBy(o=>o.CreatedDate).FirstOrDefault(x => x.VisitId == visitId);
+            var data = await _dbContext.CHGenerals.OrderBy(o => o.CreatedDate).FirstOrDefaultAsync(x => x.VisitId == visitId);
             return data;
         }
 
-        public bool SaveCHGeneral(ChGeneral chGeneral)
+        public async Task<bool> SaveCHGeneralAsync(ChGeneral chGeneral)
         {
             try
             {
-                var IsDataExist = GetCHAGeneralByVisitID(chGeneral.VisitId);
-                if (IsDataExist==null)
+                var isDataExist = await GetCHAGeneralByVisitIDAsync(chGeneral.VisitId);
+                if (isDataExist == null)
                 {
-                    _dbContext.CHGenerals.Add(chGeneral);
-                    _dbContext.SaveChanges();
+                    await _dbContext.CHGenerals.AddAsync(chGeneral);
                 }
                 else
                 {
                     UpdateExistingChGeneral(chGeneral);
-                    //_dbContext.CHGenerals.Update(chGeneral);
                 }
-               
-                
+
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
@@ -49,9 +46,10 @@ namespace OTNotes.DataAccess.DAL
                 return false;
             }
         }
+
         private void UpdateExistingChGeneral(ChGeneral existingData)
         {
-            var dataExist = _dbContext.CHGenerals.Find(existingData.CHGeneralId); 
+            var dataExist = _dbContext.CHGenerals.Find(existingData.CHGeneralId);
             if (dataExist == null)
                 return;
 
@@ -109,6 +107,7 @@ namespace OTNotes.DataAccess.DAL
             _dbContext.SaveChanges();
 
         }
+
         private void HandleDataAccessException(Exception ex)
         {
             _logger.LogError(ex, "An error occurred in data access.");

@@ -22,11 +22,11 @@ namespace OT_App_API.Controllers
         }
 
         [HttpGet("{visitId}")]
-        public IActionResult GetHistory(int visitId)
+        public async Task<IActionResult> GetHistory(int visitId)
         {
             try
             {
-                var chGeneral = _chGeneralService.GetCHAGeneralByVisitID(visitId);
+                var chGeneral = await _chGeneralService.GetCHAGeneralByVisitIDAsync(visitId);
                 if (chGeneral == null)
                 {
                     return NotFound(new ApiResponse<object>
@@ -57,10 +57,10 @@ namespace OT_App_API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] ChGeneralDTO chGeneralDTO)
+        public async Task<IActionResult> Post([FromBody] ChGeneralDTO chGeneralDTO)
         {
-            //try
-            //{
+            try
+            {
                 // Validate the received data
                 if (!ModelState.IsValid)
                 {
@@ -71,26 +71,26 @@ namespace OT_App_API.Controllers
                         Data = ModelState
                     });
                 }
-                _chGeneralService.SaveCHGeneral(chGeneralDTO);
+
+                await _chGeneralService.SaveCHGeneralAsync(chGeneralDTO);
+
                 return Ok(new ApiResponse<object>
                 {
                     Success = true,
                     Message = "Data saved successfully.",
                     Data = null
                 });
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError(ex, "Error while processing POST request");
-            //    return StatusCode(500, new ApiResponse<object>
-            //    {
-            //        Success = false,
-            //        Message = "An error occurred while processing the request.",
-            //        Data = null
-            //    });
-            //}
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while processing Post request");
+                return StatusCode(500, new ApiResponse<object>
+                {
+                    Success = false,
+                    Message = "An error occurred while processing the request.",
+                    Data = null
+                });
+            }
         }
-
-
     }
 }

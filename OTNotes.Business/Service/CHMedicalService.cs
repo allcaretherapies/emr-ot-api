@@ -4,7 +4,7 @@ using OTNotes.DataAccess.DAL;
 using OTNotes.DataAccess.DBObject;
 using OTNotes.DTO;
 
-public class CHMedicalService : ICHMedicalService, IDisposable
+public class CHMedicalService : ICHMedicalService//,IDisposable
 {
     private readonly CHMedicalDAL _dAL;
     private readonly IMapper _mapper;
@@ -57,4 +57,6 @@ public class CHMedicalService : ICHMedicalService, IDisposable
         Dispose(true);
         GC.SuppressFinalize(this);
     }
+
+    
 }
