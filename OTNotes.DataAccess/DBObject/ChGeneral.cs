@@ -44,8 +44,8 @@ public partial class ChGeneral
     public string? LivingSituation { get; set; }
 
     public string? LivingSituationDescription { get; set; }
-    [StringLength(1000)]
-    public string? IsEnvBarrier { get; set; }
+    [StringLength(5)]
+    public string? EnvBarrier { get; set; }
     [StringLength(1000)]
     public string? EnvBarrierEquipment { get; set; }
     [StringLength(5)]

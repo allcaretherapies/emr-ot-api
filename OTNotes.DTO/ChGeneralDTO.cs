@@ -19,7 +19,7 @@ namespace OTNotes.DTO
         public string? HomBoundDescription { get; set; }
         public string? PriorAdl { get; set; }
         public string? HasFallHistory { get; set; }
-        public DateTime? FallHistory { get; set; }
+        public DateTime? FallHistoryDate { get; set; }
         public string? IsIntervention { get; set; }
         public string? InterventionDetail { get; set; }
         public string? ReportedBy { get; set; }

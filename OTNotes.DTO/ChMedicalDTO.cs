@@ -13,16 +13,18 @@ namespace OTNotes.DTO
         public int CHMedicalId { get; set; }
 
         public int VisitId { get; set; }
-
         public int ClientId { get; set; }
 
+        public string? DevelopmentalDiagnoses { get; set; } = null!;
+        public string? BehavioralDiagnoses { get; set; } = null!;
         public string? HadHeadInjury { get; set; } = null!;
-
         public string? HeadInjuryDescription { get; set; }
 
         public string? HasAllergy { get; set; } = null!;
 
         public string? AllergyDescription { get; set; }
+        public string? AnyPreviousSurgeries { get; set; }
+        public string? PrecautionsLimitations { get; set; }
 
         public string? HasRecentChangeInVoice { get; set; }
 

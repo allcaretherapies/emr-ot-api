@@ -4,7 +4,9 @@ using Microsoft.OpenApi.Models;
 using OT_App_API.Filters;
 using OTNotes.Business.Interface;
 using OTNotes.DataAccess.DAL;
+using Microsoft.AspNetCore.Cors;
 using IHostingEnvironment = Microsoft.Extensions.Hosting.IHostingEnvironment;
+using Newtonsoft.Json.Serialization;
 
 namespace OT_App_API
 {
@@ -15,7 +17,9 @@ namespace OT_App_API
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseRouting();
            
+
             if (env.IsDevelopment())
             {
                 app.UseSwagger();
@@ -25,6 +29,9 @@ namespace OT_App_API
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "OT-Notes-API");
                 });
             }
+            // app.UseCors("AllowSpecificOrigins");
+            //app.UseCors();
+            app.UseCors("CorsPolicy");
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -49,7 +56,30 @@ namespace OT_App_API
                     Description = "API documentation for OT-Notes"
                 });
             });
+            services.AddControllers()
+                     .AddNewtonsoftJson(options =>
+                     {
+                         // Use the default contract resolver (property names as defined in the model)
+                         options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                     });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("*");
+                });
+            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowSpecificOrigins",
+            //     builder =>
+            //     {
+            //         builder.WithOrigins("http://localhost:3001/", "http://localhost:3000/")
+            //                .AllowAnyHeader()
+            //                .AllowAnyMethod().AllowCredentials();
+            //     });
+            //});
             //// Add authentication
             //services.AddAuthentication(options =>
             //{

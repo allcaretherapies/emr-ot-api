@@ -30,6 +30,7 @@ namespace OTNotes.DataAccess.DAL
                 var isDataExist = await GetCHAGeneralByVisitIDAsync(chGeneral.VisitId);
                 if (isDataExist == null)
                 {
+                    chGeneral.CreatedDate = DateTime.Now;
                     await _dbContext.CHGenerals.AddAsync(chGeneral);
                 }
                 else
@@ -49,7 +50,7 @@ namespace OTNotes.DataAccess.DAL
 
         private void UpdateExistingChGeneral(ChGeneral existingData)
         {
-            var dataExist = _dbContext.CHGenerals.Find(existingData.CHGeneralId);
+            var dataExist = _dbContext.CHGenerals.FirstOrDefault(x => x.VisitId == existingData.VisitId);
             if (dataExist == null)
                 return;
 
@@ -67,7 +68,7 @@ namespace OTNotes.DataAccess.DAL
             dataExist.ReportedBy = existingData.ReportedBy;
             dataExist.LivingSituation = existingData.LivingSituation;
             dataExist.LivingSituationDescription = existingData.LivingSituationDescription;
-            dataExist.IsEnvBarrier = existingData.IsEnvBarrier;
+            dataExist.EnvBarrier = existingData.EnvBarrier;
             dataExist.EnvBarrierEquipment = existingData.EnvBarrierEquipment;
             dataExist.AdaptiveEquipment = existingData.AdaptiveEquipment;
             dataExist.AdaptiveEquipmentDeatil = existingData.AdaptiveEquipmentDeatil;
@@ -98,10 +99,7 @@ namespace OTNotes.DataAccess.DAL
             dataExist.WalkAge = existingData.WalkAge;
             dataExist.ComWordsAge1 = existingData.ComWordsAge1;
             dataExist.ComWordsAge = existingData.ComWordsAge;
-            dataExist.CreatedDate = existingData.CreatedDate;
-            dataExist.CreatedBy = existingData.CreatedBy;
-            dataExist.UpdatedDate = existingData.UpdatedDate;
-            dataExist.UpdatedBy = existingData.UpdatedBy;
+            dataExist.UpdatedDate = DateTime.Now;
             dataExist.HaveYouReceiveReport = existingData.HaveYouReceiveReport;
             _dbContext.CHGenerals.Update(dataExist);
             _dbContext.SaveChanges();

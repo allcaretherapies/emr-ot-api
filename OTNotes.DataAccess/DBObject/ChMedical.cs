@@ -17,6 +17,10 @@ public partial class ChMedical
     [Column(Order = 2)]
     public int ClientId { get; set; }
 
+    [StringLength(5000)]
+    public string? DevelopmentalDiagnoses { get; set; } = null!;
+    [StringLength(5000)]
+    public string? BehavioralDiagnoses { get; set; } = null!;
     public string? HadHeadInjury { get; set; } = null!;
 
     public string? HeadInjuryDescription { get; set; }
@@ -33,10 +37,14 @@ public partial class ChMedical
 
     public string? MedicationDescription { get; set; }
 
+    [StringLength(5)]
+    public string? AnyPreviousSurgeries { get; set; }
     public string? PreviousSurgeriesDescription { get; set; }
 
     public string? OverallHealthDescription { get; set; }
-
+    [StringLength(5000)]
+    public string? PrecautionsLimitations { get; set; }
+    
     public string? Diagnosis1 { get; set; }
 
     public DateTime? Diagnosis1OnsetDate { get; set; }

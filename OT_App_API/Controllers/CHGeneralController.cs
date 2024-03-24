@@ -5,6 +5,7 @@ using OTNotes.Business;
 using OTNotes.DTO;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 
 namespace OT_App_API.Controllers
 {
@@ -21,6 +22,7 @@ namespace OT_App_API.Controllers
             _logger = logger;
         }
 
+        [EnableCors]
         [HttpGet("{visitId}")]
         public async Task<IActionResult> GetHistory(int visitId)
         {
@@ -31,27 +33,28 @@ namespace OT_App_API.Controllers
                 {
                     return NotFound(new ApiResponse<object>
                     {
-                        Success = false,
-                        Message = "No data found for the specified visit ID.",
-                        Data = null
+                        success = false,
+                        message = "No data found for the specified visit ID.",
+                        data = null
                     });
                 }
 
                 return Ok(new ApiResponse<ChGeneralDTO>
                 {
-                    Success = true,
-                    Message = "Data found successfully.",
-                    Data = chGeneral
+                    success = true,
+                    message = "Data found successfully.",
+                    data = chGeneral
                 });
+                //return Ok(chGeneral);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while processing Get request for visit ID {VisitId}", visitId);
                 return StatusCode(500, new ApiResponse<object>
                 {
-                    Success = false,
-                    Message = "An error occurred while processing the request.",
-                    Data = null
+                    success = false,
+                    message = "An error occurred while processing the request.",
+                    data = null
                 });
             }
         }
@@ -66,29 +69,36 @@ namespace OT_App_API.Controllers
                 {
                     return BadRequest(new ApiResponse<object>
                     {
-                        Success = false,
-                        Message = "Invalid data received.",
-                        Data = ModelState
+                        success = false,
+                        message = "Invalid data received.",
+                        data = ModelState
                     });
                 }
 
-                await _chGeneralService.SaveCHGeneralAsync(chGeneralDTO);
+                var isSaved = await _chGeneralService.SaveCHGeneralAsync(chGeneralDTO);
 
-                return Ok(new ApiResponse<object>
-                {
-                    Success = true,
-                    Message = "Data saved successfully.",
-                    Data = null
-                });
+                return isSaved
+                             ? Ok(new ApiResponse<object>
+                             {
+                                 success = true,
+                                 message = "Case-history data saved successfully!..",
+                                 data = null
+                             })
+                             : BadRequest(new ApiResponse<object>
+                             {
+                                 success = false,
+                                 message = "Failed to save data.",
+                                 data = null
+                             });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while processing Post request");
                 return StatusCode(500, new ApiResponse<object>
                 {
-                    Success = false,
-                    Message = "An error occurred while processing the request.",
-                    Data = null
+                    success = false,
+                    message = "An error occurred while processing the request.",
+                    data = null
                 });
             }
         }

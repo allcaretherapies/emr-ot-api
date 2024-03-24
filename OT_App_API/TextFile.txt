@@ -1,0 +1,9 @@
+﻿Deploy your ASP.NET Core application to Lambda:
+
+Use the dotnet lambda deploy-function command to deploy your application to Lambda:
+css
+Copy code
+dotnet lambda deploy-function MyLambdaFunction --function-role MyLambdaRole --region your-aws-region
+Replace MyLambdaFunction with the name you want to give your Lambda function, MyLambdaRole with the IAM role you created, and your-aws-region with your desired AWS region.
+
+dotnet lambda deploy-function MyLambdaFunction --function-role MyLambdaRole --region your-aws-region

@@ -12,9 +12,9 @@ namespace OT_App_API
                 T result = action();
                 return new OkObjectResult(new ApiResponse<T>
                 {
-                    Success = true,
-                    Message = "Operation completed successfully.",
-                    Data = result
+                    success = true,
+                    message = "Operation completed successfully.",
+                    data = result
                 });
             }
             catch (Exception ex)
@@ -22,9 +22,9 @@ namespace OT_App_API
                 logger.LogError(ex, "An error occurred while processing the request.");
                 return new ObjectResult(new ApiResponse<object>
                 {
-                    Success = false,
-                    Message = "An error occurred while processing the request.",
-                    Data = null
+                    success = false,
+                    message = "An error occurred while processing the request.",
+                    data = null
                 })
                 {
                     StatusCode = 500

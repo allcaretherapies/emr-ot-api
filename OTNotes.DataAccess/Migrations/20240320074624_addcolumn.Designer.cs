@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OTNotes.DataAccess;
 
@@ -11,9 +12,11 @@ using OTNotes.DataAccess;
 namespace OTNotes.DataAccess.Migrations
 {
     [DbContext(typeof(OtnotesContext))]
-    partial class OtnotesContextModelSnapshot : ModelSnapshot
+    [Migration("20240320074624_addcolumn")]
+    partial class addcolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -217,10 +220,6 @@ namespace OTNotes.DataAccess.Migrations
                     b.Property<string>("AllergyDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AnyPreviousSurgeries")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
-
                     b.Property<string>("BehavioralDiagnoses")
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
@@ -306,10 +305,6 @@ namespace OTNotes.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OverallHealthDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PrecautionsLimitations")
-                        .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PreviousSurgeriesDescription")

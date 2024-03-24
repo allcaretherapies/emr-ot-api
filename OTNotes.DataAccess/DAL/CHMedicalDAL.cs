@@ -52,30 +52,27 @@ namespace OTNotes.DataAccess.DAL
 
         public async Task<bool> SaveChMedicalAsync(ChMedical chMedical)
         {
-            try
-            {
-                var existingData = await GetCHMedicalByVisitIDAsync(chMedical.VisitId);
+            var existingData = await GetCHMedicalByVisitIDAsync(chMedical.VisitId);
 
-                if (existingData == null)
-                {
-                    await _dbContext.CHMedicals.AddAsync(chMedical);
-                }
-                else
-                {
-                    UpdateExistingChMedical(existingData, chMedical);
-                }
-
-                await _dbContext.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception ex)
+            if (existingData == null)
             {
-                HandleDataAccessException(ex);
-                return false;
+                chMedical.CreatedBy= chMedical.CreatedBy;
+                chMedical.CreatedDate = DateTime.Now;
+                chMedical.UpdatedBy = null;
+                await _dbContext.CHMedicals.AddAsync(chMedical);
             }
+            else
+            {
+                chMedical.CHMedicalId = existingData.CHMedicalId;
+                UpdateExistingChMedical(chMedical);
+            }
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+
         }
 
-        private void UpdateExistingChMedical(ChMedical caseHistoryChild, ChMedical newData)
+        private void UpdateExistingChMedical(ChMedical caseHistoryChild)
         {
             var dataExist = _dbContext.CHMedicals.Find(caseHistoryChild.CHMedicalId);
             if (dataExist == null)
@@ -86,6 +83,9 @@ namespace OTNotes.DataAccess.DAL
             dataExist.HasAllergy = caseHistoryChild.HasAllergy;
             dataExist.AllergyDescription = caseHistoryChild.AllergyDescription;
             dataExist.PreviousSurgeriesDescription = caseHistoryChild.PreviousSurgeriesDescription;
+            dataExist.AnyPreviousSurgeries = caseHistoryChild.AnyPreviousSurgeries;
+            dataExist.PreviousSurgeriesDescription = caseHistoryChild.PreviousSurgeriesDescription;
+            dataExist.PrecautionsLimitations = caseHistoryChild.PrecautionsLimitations;
             dataExist.OverallHealthDescription = caseHistoryChild.OverallHealthDescription;
             dataExist.DoesWearGlasses = caseHistoryChild.DoesWearGlasses;
             dataExist.LastHearingScreeningDate = caseHistoryChild.LastHearingScreeningDate;
@@ -100,7 +100,14 @@ namespace OTNotes.DataAccess.DAL
             dataExist.DoesWearHearingAids = caseHistoryChild.DoesWearHearingAids;
             dataExist.IsOnMedication = caseHistoryChild.IsOnMedication;
             dataExist.MedicationDescription = caseHistoryChild.MedicationDescription;
-            dataExist.UpdatedDate = caseHistoryChild.UpdatedDate;
+            dataExist.UpdatedDate =DateTime.Now;
+            dataExist.UpdatedBy = caseHistoryChild.UpdatedBy;
+            dataExist.BehavioralDiagnoses = caseHistoryChild.BehavioralDiagnoses;
+            dataExist.DevelopmentalDiagnoses = caseHistoryChild.DevelopmentalDiagnoses;
+            dataExist.LastVisionScreeningDate = caseHistoryChild.LastVisionScreeningDate;
+            dataExist.LastVisionScreeningResult = caseHistoryChild.LastVisionScreeningResult;
+            dataExist.LastHearingScreeningResult = caseHistoryChild.LastHearingScreeningResult;
+            
             _dbContext.CHMedicals.Update(dataExist);
             _dbContext.SaveChanges();
             // Mark entity as modified and save changes

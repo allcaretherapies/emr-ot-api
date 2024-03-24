@@ -26,43 +26,44 @@ namespace OT_App_API.Controllers
         [HttpGet("{visitId}")]
         public async Task<IActionResult> GetHistory(int visitId)
         {
-            //try
-            //{
-            var chGeneral = await _chMedicalService.GetCHMedicalByVisitIDAsync(visitId);
-            if (chGeneral == null)
+            //var data = null;
+            try
+            {
+                var data = await _chMedicalService.GetCHMedicalByVisitIDAsync(visitId);
+            if (data == null)
             {
                 return NotFound(new ApiResponse<object>
                 {
-                    Success = false,
-                    Message = "No data found for the specified visit ID.",
-                    Data = null
+                    success = false,
+                    message = "No data found for the specified visit ID.",
+                    data = null
                 });
             }
 
-            return Ok(new ApiResponse<ChMedicalDTO>
-            {
-                Success = true,
-                Message = "Data found successfully.",
-                Data = chGeneral
-            });
-
-            //return Ok(new ApiResponse<string>
+            //return Ok(new ApiResponse<ChMedicalDTO>
             //{
             //    Success = true,
-            //    Message = "Data found successfully.",
-            //    Data = "Ashish"
+            //    Message = "data found successfully.",
+            //    data = chGeneral
             //});
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError(ex, "Error while processing Get request for visit ID {VisitId}", visitId);
-            //    return StatusCode(500, new ApiResponse<object>
-            //    {
-            //        Success = false,
-            //        Message = "An error occurred while processing the request.",
-            //        Data = null
-            //    });
-            //}
+            return Ok(data);
+                //return Ok(new ApiResponse<string>
+                //{
+                //    Success = true,
+                //    Message = "data found successfully.",
+                //    data = "Ashish"
+                //});
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while processing Get request for visit ID {VisitId}", visitId);
+                return StatusCode(500, new ApiResponse<object>
+                {
+                    success = false,
+                    message = "An error occurred while processing the request.",
+                    data = null
+                });
+            }
         }
 
         [HttpPost]
@@ -72,9 +73,9 @@ namespace OT_App_API.Controllers
             {
                 return BadRequest(new ApiResponse<object>
                 {
-                    Success = false,
-                    Message = "Invalid data received.",
-                    Data = ModelState
+                    success = false,
+                    message = "Invalid data received.",
+                    data = ModelState
                 });
             }
 
@@ -84,18 +85,18 @@ namespace OT_App_API.Controllers
             {
                 return Ok(new ApiResponse<object>
                 {
-                    Success = true,
-                    Message = "Data saved successfully.",
-                    Data = null
+                    success = true,
+                    message = "data saved successfully.",
+                    data = null
                 });
             }
             else
             {
                 return StatusCode(500, new ApiResponse<object>
                 {
-                    Success = false,
-                    Message = "An error occurred while saving the data.",
-                    Data = null
+                    success = false,
+                    message = "An error occurred while saving the data.",
+                    data = null
                 });
             }
         }
