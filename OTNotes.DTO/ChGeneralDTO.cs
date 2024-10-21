@@ -61,6 +61,12 @@ namespace OTNotes.DTO
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
         public string? HaveYouReceiveReport { get; set; }
+
+        public string? ExpectationFromTherepist { get; set; }
+        public string? livingInHome { get; set; }
+        public string? CurrentlyWorking { get; set; }
+        public bool? TakingServiceByAgency { get; set; }
+        public bool? OtBeforeTaken { get; set; }
     }
 
 }

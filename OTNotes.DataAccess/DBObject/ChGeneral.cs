@@ -116,4 +116,13 @@ public partial class ChGeneral
     public int? UpdatedBy { get; set; }
 
     public string? HaveYouReceiveReport { get; set; }
+
+    [StringLength(500)]
+    public string? ExpectationFromTherepist { get; set; }
+    [StringLength(50)]
+    public string? livingInHome { get; set; }
+    [StringLength(25)]
+    public string? CurrentlyWorking { get; set; }
+    public bool? TakingServiceByAgency { get; set; }
+    public bool? OtBeforeTaken { get; set; }
 }

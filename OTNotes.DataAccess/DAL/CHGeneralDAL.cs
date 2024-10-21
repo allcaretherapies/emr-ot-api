@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using OTNotes.DataAccess.DBObject;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace OTNotes.DataAccess.DAL
@@ -19,7 +20,7 @@ namespace OTNotes.DataAccess.DAL
 
         public async Task<ChGeneral> GetCHAGeneralByVisitIDAsync(int visitId)
         {
-            var data = await _dbContext.CHGenerals.OrderBy(o => o.CreatedDate).FirstOrDefaultAsync(x => x.VisitId == visitId);
+            var data = await _dbContext.CHGenerals.FirstOrDefaultAsync(x => x.VisitId == visitId);
             return data;
         }
 
@@ -101,6 +102,13 @@ namespace OTNotes.DataAccess.DAL
             dataExist.ComWordsAge = existingData.ComWordsAge;
             dataExist.UpdatedDate = DateTime.Now;
             dataExist.HaveYouReceiveReport = existingData.HaveYouReceiveReport;
+
+            dataExist.ExpectationFromTherepist = existingData.ExpectationFromTherepist;
+            dataExist.livingInHome = existingData.livingInHome;
+            dataExist.CurrentlyWorking = existingData.CurrentlyWorking;
+            dataExist.TakingServiceByAgency = existingData.TakingServiceByAgency;
+            dataExist.OtBeforeTaken = existingData.OtBeforeTaken;
+
             _dbContext.CHGenerals.Update(dataExist);
             _dbContext.SaveChanges();
 
