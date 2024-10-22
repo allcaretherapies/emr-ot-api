@@ -16,6 +16,7 @@ namespace OTNotes.DataAccess
 
         public DbSet<ChGeneral> CHGenerals { get; set; }
         public DbSet<ChMedical> CHMedicals { get; set; }
+        public DbSet<AreaOfAssess> AreaOfAssesses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -7,6 +7,8 @@ using OTNotes.DataAccess.DAL;
 using Microsoft.AspNetCore.Cors;
 using IHostingEnvironment = Microsoft.Extensions.Hosting.IHostingEnvironment;
 using Newtonsoft.Json.Serialization;
+using OTNotes.Business.Service;
+using OT_App_API.Middleware;
 
 namespace OT_App_API
 {
@@ -18,7 +20,8 @@ namespace OT_App_API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
-           
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             if (env.IsDevelopment())
             {
@@ -38,9 +41,11 @@ namespace OT_App_API
         {
             services.AddScoped<ICHGeneralService, CHGeneralService>();
             services.AddScoped<ICHMedicalService, CHMedicalService>();
+            services.AddScoped<IAreaOfAssess, AreaOfAssessService>();
 
             services.AddScoped<CHMedicalDAL>();
             services.AddScoped<CHGeneralDAL>();
+            services.AddScoped<AreaOfAssessDAL>();
 
             services.AddMvc(options =>
             {
