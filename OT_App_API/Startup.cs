@@ -9,6 +9,7 @@ using IHostingEnvironment = Microsoft.Extensions.Hosting.IHostingEnvironment;
 using Newtonsoft.Json.Serialization;
 using OTNotes.Business.Service;
 using OT_App_API.Middleware;
+using Microsoft.AspNetCore.Authentication;
 
 namespace OT_App_API
 {
@@ -20,21 +21,29 @@ namespace OT_App_API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
+            app.UseAuthentication();  // This enables authentication (like JWT, Basic Auth, etc.)
+            app.UseAuthorization();
+
+            app.UseCors("CorsPolicy");
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();  // Maps controller routes
+            });
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-            if (env.IsDevelopment())
-            {
+            //if (env.IsDevelopment())
+            //{
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                    // c.SwaggerEndpoint("/OTAPI/swagger/v1/swagger.json", "OT-Notes-API");
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "OT-Notes-API");
                 });
-            }
+            //}
             // app.UseCors("AllowSpecificOrigins");
             //app.UseCors();
-            app.UseCors("CorsPolicy");
+            
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -46,6 +55,9 @@ namespace OT_App_API
             services.AddScoped<CHMedicalDAL>();
             services.AddScoped<CHGeneralDAL>();
             services.AddScoped<AreaOfAssessDAL>();
+            services.AddAuthentication("BasicAuthentication")
+        .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
 
             services.AddMvc(options =>
             {
@@ -60,7 +72,34 @@ namespace OT_App_API
                     Version = "v1",
                     Description = "API documentation for OT-Notes"
                 });
+                // Add basic auth scheme
+                options.AddSecurityDefinition("basic", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "basic",
+                    In = ParameterLocation.Header,
+                    Description = "Input your username and password to access this API"
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "basic"
+                    }
+                },
+                new string[] {}
+            }
+        });
             });
+            // Add the authentication scheme
+           
+
             services.AddControllers()
                      .AddNewtonsoftJson(options =>
                      {
@@ -75,37 +114,8 @@ namespace OT_App_API
                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("*");
                 });
             });
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("AllowSpecificOrigins",
-            //     builder =>
-            //     {
-            //         builder.WithOrigins("http://localhost:3001/", "http://localhost:3000/")
-            //                .AllowAnyHeader()
-            //                .AllowAnyMethod().AllowCredentials();
-            //     });
-            //});
-            //// Add authentication
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(options =>
-            //{
-            //    // Configure JWT authentication parameters
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuer = true,
-            //        ValidateAudience = true,
-            //        ValidateIssuerSigningKey = true,
-            //        ValidIssuer = "your_issuer",
-            //        ValidAudience = "your_audience",
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your_secret_key"))
-            //    };
-            //});
 
-            //// Add authorization
-            //services.AddAuthorization();
+            services.AddAuthorization();
 
         }
 
