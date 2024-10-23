@@ -23,21 +23,26 @@ namespace OT_App_API.Controllers
         [HttpGet("{visitId}")]
         public async Task<IActionResult> GetAreaOfAssess(int visitId)
         {
-            
-                var areaOfAssess = await _areaOfAssess.GetAreaOfAssessByVisitIDAsync(visitId);
-                if (areaOfAssess == null)
-                {
-                    return NoContent();
-                }
 
-                return Ok(new ApiResponse<AreaOfAssessDTO>
+            var areaOfAssess = await _areaOfAssess.GetAreaOfAssessByVisitIDAsync(visitId);
+            if (areaOfAssess == null)
+            {
+                return Ok(new ApiResponse<object>
                 {
-                    success = true,
-                    message = "Data found successfully.",
-                    data = areaOfAssess
+                    success = false,
+                    message = "No data found.",
+                    data = null
                 });
-                //return Ok(areaOfAssess);
-           
+            }
+
+            return Ok(new ApiResponse<AreaOfAssessDTO>
+            {
+                success = true,
+                message = "Data found successfully.",
+                data = areaOfAssess
+            });
+            //return Ok(areaOfAssess);
+
         }
 
         [EnableCors]
