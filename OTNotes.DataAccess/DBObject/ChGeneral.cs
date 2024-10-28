@@ -125,4 +125,17 @@ public partial class ChGeneral
     public string? CurrentlyWorking { get; set; }
     public bool? TakingServiceByAgency { get; set; }
     public bool? OtBeforeTaken { get; set; }
+
+    [StringLength(5000)]
+    public string? DiscribServiceOfOtherAgency { get; set; }
+    [StringLength(5000)]
+    public string? OtBeforDiscription { get; set; }
+    [StringLength(5000)]
+    public string? ChildPastTherapy { get; set; }
+    [StringLength(1000)]
+    public string? LivingInHomeChild { get; set; }
+    [StringLength(1000)]
+    public string? ChildChalenges { get; set; }
+    [StringLength(1000)]
+    public string? ChildIntrest { get; set; }
 }
