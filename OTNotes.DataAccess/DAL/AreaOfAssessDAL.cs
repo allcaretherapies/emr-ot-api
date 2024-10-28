@@ -31,17 +31,17 @@ namespace OTNotes.DataAccess.DAL
             var existingData = await GetAreaOfAssessById(areaOfAssess.VisitId);
             if (existingData == null)
             {
-                areaOfAssess.CreatedBy = existingData.CreatedBy;
+                areaOfAssess.CreatedBy = areaOfAssess.CreatedBy;
                 areaOfAssess.CreatedDate = DateTime.Now;
                 areaOfAssess.UpdatedBy = null;
                 await _dbContext.AreaOfAssesses.AddAsync(areaOfAssess);
             }
             else
             {
-                areaOfAssess.AssessArea = existingData.AssessArea;
-                areaOfAssess.UpdatedBy = existingData.UpdatedBy;
-                areaOfAssess.UpdatedDate = DateTime.Now;
-                UpdateExistingAreaOfAssess(areaOfAssess);
+                existingData.AssessArea = areaOfAssess.AssessArea;
+                existingData.UpdatedBy = areaOfAssess.UpdatedBy;
+                existingData.UpdatedDate = DateTime.Now;
+                UpdateExistingAreaOfAssess(existingData);
             }
 
             await _dbContext.SaveChangesAsync();

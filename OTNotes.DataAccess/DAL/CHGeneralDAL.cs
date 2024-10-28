@@ -108,7 +108,12 @@ namespace OTNotes.DataAccess.DAL
             dataExist.CurrentlyWorking = existingData.CurrentlyWorking;
             dataExist.TakingServiceByAgency = existingData.TakingServiceByAgency;
             dataExist.OtBeforeTaken = existingData.OtBeforeTaken;
-
+            dataExist.DiscribServiceOfOtherAgency = existingData.DiscribServiceOfOtherAgency;
+            dataExist.OtBeforDiscription = existingData.OtBeforDiscription;
+            dataExist.ChildPastTherapy = existingData.ChildPastTherapy;
+            dataExist.LivingInHomeChild = existingData.LivingInHomeChild;
+            dataExist.ChildChalenges = existingData.ChildChalenges;
+            dataExist.ChildIntrest = existingData.ChildIntrest;
             _dbContext.CHGenerals.Update(dataExist);
             _dbContext.SaveChanges();
 

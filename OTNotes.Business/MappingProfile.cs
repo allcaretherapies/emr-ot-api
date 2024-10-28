@@ -15,6 +15,7 @@ namespace OTNotes.Business
         {
             CreateMap<ChGeneral, ChGeneralDTO > ().ReverseMap();
             CreateMap<ChMedical, ChMedicalDTO>().ReverseMap();
+            CreateMap<AreaOfAssess, AreaOfAssessDTO>().ReverseMap();
         }
     }
 }

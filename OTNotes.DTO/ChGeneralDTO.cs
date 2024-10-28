@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,6 +68,14 @@ namespace OTNotes.DTO
         public string? CurrentlyWorking { get; set; }
         public bool? TakingServiceByAgency { get; set; }
         public bool? OtBeforeTaken { get; set; }
+
+
+        public string? DiscribServiceOfOtherAgency { get; set; }
+        public string? OtBeforDiscription { get; set; }
+        public string? ChildPastTherapy { get; set; }
+        public string? LivingInHomeChild { get; set; }
+        public string? ChildChalenges { get; set; }
+        public string? ChildIntrest { get; set; }
     }
 
 }
