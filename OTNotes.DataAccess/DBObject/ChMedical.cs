@@ -82,4 +82,17 @@ public partial class ChMedical
     public DateTime? UpdatedDate { get; set; }
 
     public int? UpdatedBy { get; set; }
+
+    [StringLength(5000)]
+    public string ProblemSwallowSwitch { get; set; }
+    [StringLength(5000)]
+    public string CoughAfterDrink { get; set; }
+    [StringLength(5000)]
+    public string JointPainDiscomfort { get; set; }
+    [StringLength(5000)]
+    public string MedicalDiagnosisList { get; set; }
+    [StringLength(5000)]
+    public string PrenatalBirthHistory { get; set; }
+    [StringLength(5000)]
+    public string StayNICU { get; set; }
 }

@@ -23,15 +23,15 @@ namespace OT_App_API
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-            if (env.IsDevelopment())
-            {
+            //if (env.IsDevelopment())
+            //{
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                    // c.SwaggerEndpoint("/OTAPI/swagger/v1/swagger.json", "OT-Notes-API");
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "OT-Notes-API");
                 });
-            }
+            //}
             // app.UseCors("AllowSpecificOrigins");
             //app.UseCors();
             app.UseCors("CorsPolicy");

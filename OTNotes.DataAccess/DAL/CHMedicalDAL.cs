@@ -107,7 +107,14 @@ namespace OTNotes.DataAccess.DAL
             dataExist.LastVisionScreeningDate = caseHistoryChild.LastVisionScreeningDate;
             dataExist.LastVisionScreeningResult = caseHistoryChild.LastVisionScreeningResult;
             dataExist.LastHearingScreeningResult = caseHistoryChild.LastHearingScreeningResult;
-            
+
+            dataExist.ProblemSwallowSwitch = caseHistoryChild.ProblemSwallowSwitch;
+            dataExist.CoughAfterDrink = caseHistoryChild.CoughAfterDrink;
+            dataExist.JointPainDiscomfort = caseHistoryChild.JointPainDiscomfort;
+            dataExist.MedicalDiagnosisList = caseHistoryChild.MedicalDiagnosisList;
+            dataExist.PrenatalBirthHistory = caseHistoryChild.ProblemSwallowSwitch;
+            dataExist.StayNICU = caseHistoryChild.CoughAfterDrink;
+
             _dbContext.CHMedicals.Update(dataExist);
             _dbContext.SaveChanges();
             // Mark entity as modified and save changes

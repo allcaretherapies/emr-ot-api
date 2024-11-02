@@ -76,5 +76,12 @@ namespace OTNotes.DTO
 
         public int? UpdatedBy { get; set; }
 
+        public string ProblemSwallowSwitch { get; set; }
+        public string CoughAfterDrink { get; set; }
+        public string JointPainDiscomfort { get; set; }
+        public string MedicalDiagnosisList { get; set; }
+        public string PrenatalBirthHistory { get; set; }
+        public string StayNICU { get; set; }
+
     }
 }
